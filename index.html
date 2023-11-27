@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://kit.fontawesome.com/b2c00ac6e0.js" crossorigin="anonymous"></script>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Hide scrollbar for IE, Edge and Firefox */
+        .no-scrollbar {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+        .custom-scroll-bar::-webkit-scrollbar {
+            width: 10px;
+            }
+        .custom-scroll-bar::-webkit-scrollbar-track {
+            background-color: #e4e4e4;
+            border-radius: 100px;
+        }
+        .custom-scroll-bar::-webkit-scrollbar-thumb {
+            border-radius: 100px;
+            background-image: linear-gradient(180deg, #d0368a 0%, #708ad4 99%);
+            box-shadow: inset 2px 2px 5px 0 rgba(#fff, 0.5);
+        }
+        .active{
+            color: rgb(29,78,216);
+            font-size: 24px;
+            font-weight: 600;
+        }
+    
+
+        /* header styles */
+        /* .sign-up-link .fa-arrow-right{
+            color: #ffdf0f;
+        } */
+        .sign-up-link:hover .fa-arrow-right {
+            color: black;
+        }
+        .user-link{
+            color: #fcfcfc;
+        }
+        .user-link:hover{
+            color: #000000;
+        }
+        .selected-yellow{
+            background-color: #ffdf0f ;
+        }
+    </style>
+    <title>Document</title>
+</head>
+<body id="body" class="flex flex-col justify-center items-center">
+    <div class="max-w-[380px] md:[100%] w-[100%] md:max-w-[100%] relative">
+        <!-- <object type="text/html" data="header.html" width="100%" height="55" class="pb-0 sticky top-0 z-10" ></object> -->
+        <header class="sticky top-0 z-10 border border-black max-w-[1400px] w-[100%] mx-auto rounded-b-lg flex py-2 px-4 justify-between items-center bg-white">
+            <div class="flex justify-between gap-16">
+                <a href="#" id="book-btn" class="text-2xl flex items-center justify-center gap-2 hover:scale-110 ease-in-out duration-300 active:scale-[100%]">
+                    <i class="fa-solid fa-book" style="color: #005eff;"></i>
+                    <h3 class="antialiased font-medium">Book</h3>
+                </a>
+                <div class="hidden md:flex lg:flex justify-between items-center gap-4">
+                    <a id="homeBtn" href="#" class="px-3 py-1 text-sm rounded-2xl font-medium flex justify-center items-center" value="Home">HOME</a>
+                    <a id="shopBtn" href="#" class="px-3 py-1 text-sm flex items-center justify-center gap-2 rounded-2xl">
+                        <h3 class="antialiased font-medium">SHOPPING LIST</h3>
+                        <i class="fa-solid fa-cart-shopping" style="color: #000000;"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="flex justify-between items-center gap-4">
+                <label class="relative inline-flex items-center cursor-pointer justify-center">
+                    <input type="checkbox" value="" class="sr-only peer">
+                    <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                </label>
+                <i class="fa-solid fa-bars text-2xl cursor-pointer hover:text-blue-600 active:scale-95 ease-in-out duration-300 lg:hidden md:hidden"></i>
+                <div class="hidden md:flex lg:flex">
+                    <a href="#" id="registerBtn" class="sign-up-link border border-black p-2 flex justify-between items-center gap-16 rounded-xl bg-blue-600 text-white hover:bg-amber-400 ease-in-out duration-300 hover:text-black">
+                        <p class="text-sm font-medium">Sign up</p>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                    <div id="showUser" class="relative hidden">
+                        <a href="#" class="user-link sign-up-link p-2 flex justify-between items-center gap-16 rounded-xl bg-blue-600 text-white hover:bg-amber-400 ease-in-out duration-300 hover:text-black">
+                            <p class="text-sm font-medium flex gap-2 items-center justify-center"></p>
+                            <i class="fa-solid fa-angle-down"></i>
+                            <i class="fa-solid fa-angle-up hidden" style="color: #000000;"></i>
+                        </a>
+                        <a href="#" onclick="logMeOut()" class="hidden absolute w-[100%] sign-up-link border border-black p-2 flex justify-between items-center gap-16 rounded-xl bg-white hover:bg-amber-400 ease-in-out duration-300 hover:text-black">
+                            <p class="text-sm font-medium">log out</p>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div id="Home" class="max-w-[1400px] mx-auto flex flex-col md:flex-col lg:flex-row w-[100%] pt-4">
+        <aside class="lg:left-0 lg:top-16 lg:sticky flex flex-col lg:flex-col md:flex-row justify-between gap-10 lg:gap-0 h-[600px] lg:h-[1000px] md:h-[400px] md:w-[100%] lg:w-[40%] ">
+            <div id="categories-list" class="custom-scroll-bar flex gap-6 flex-col h-[40vh] lg:h-[45%] md:h-[100%] scroll-smooth overflow-x-hidden overflow-y-auto w-[100%] md:max-w-[400px] md:w-[100%] text-xl font-normal text-gray-600 list-none pl-8"></div>
+            <div class="flex gap-6 flex-col h-[40vh] lg:h-[45%] md:h-[100%] w-[100%] text-xl font-normal text-gray-600 list-none bg-gradient-to-t from-purple-400 to-indigo-500 md:min-w-[65%] md:w-[100%] rounded-xl">
+                <h1 class="text-center text-white text-2xl">Support Ukraine</h1>
+                <div class="overflow-y-auto no-scrollbar scroll-smooth flex flex-col gap-5 h-[66%] items-start pl-8 md:pl-16 lg:pl-8">
+                        <li class="flex gap-2 text-lg text-white items-center justify-center cursor-pointer"> <span id="support-id">01</span><img src="https://yevhenii2022.github.io/team-proj-js-book-app/01-found-1.a728105c.png" alt=""></li>
+                        <li class="flex gap-2 text-lg text-white items-center justify-center cursor-pointer"> <span id="support-id">02</span><img src="https://yevhenii2022.github.io/team-proj-js-book-app/02-found-1.feda50b1.png" alt=""></li>
+                        <li class="flex gap-2 text-lg text-white items-center justify-center cursor-pointer"> <span id="support-id">03</span><img src="https://yevhenii2022.github.io/team-proj-js-book-app/03-found-1.89276286.png" alt=""></li>
+                        <li class="flex gap-2 text-lg text-white items-center justify-center cursor-pointer"> <span id="support-id">04</span><img src="https://yevhenii2022.github.io/team-proj-js-book-app/04-found-1.cbff70d4.png" alt=""></li>
+                        <li class="flex gap-2 text-lg text-white items-center justify-center cursor-pointer"> <span id="support-id">05</span><img src="https://yevhenii2022.github.io/team-proj-js-book-app/05-found-1.0fdab6a1.png" alt=""></li>
+                        <li class="flex gap-2 text-lg text-white items-center justify-center cursor-pointer"> <span id="support-id">06</span><img src="https://yevhenii2022.github.io/team-proj-js-book-app/06-found-1.c5359439.png" alt=""></li>
+                        <li class="flex gap-2 text-lg text-white items-center justify-center cursor-pointer"> <span id="support-id">07</span><img src="https://yevhenii2022.github.io/team-proj-js-book-app/07-found-1.174022ef.png" alt=""></li>
+                        <li class="flex gap-2 text-lg text-white items-center justify-center cursor-pointer"> <span id="support-id">08</span><img src="https://yevhenii2022.github.io/team-proj-js-book-app/08-found-1.7aca5d21.png" alt=""></li>
+                </div>
+                <div class="flex justify-center">
+                    <p class="rounded-[50%] h-10 w-10 text-center flex justify-center items-center cursor-pointer bg-white"><i class="fa-solid fa-angle-down" style="color: black;"></i></p>
+                </div>
+            </div>
+        </aside>
+        <div id="book-shelf" class="px-8 w-[100%]">
+            <h1 class="text-[2.5rem] font-bold mb-8">Best Sellers <span class="text-blue-700">Books</span></h1>
+            <div class="w-[100%] flex flex-col gap-16">
+                <div class="flex flex-col gap-4 w-[100%]">
+                    <h6 class="text-gray-400 font-bold">ADVICE HOW-TO AND MISCELLANEOUS</h6>
+                    <div class="w-[100%] flex justify-between gap-6">
+                        <div class="w-[100%] md:grow lg:grow cursor-pointer">
+                            <figure>
+                                <img class="rounded-lg" src="./my_book.jpg" alt="">
+                            </figure>
+                            <h6 class="font-semibold">ATOMIC HABITS</h6>
+                            <p class="text-[12px] text-gray-400 font-bold"><i>James Clear</i></p>
+                        </div>
+                        <div class="w-[100%] md:grow lg:grow hidden md:block lg:block cursor-pointer">
+                            <figure>
+                                <img class="rounded-lg" src="./my_book.jpg" alt="">
+                            </figure>
+                            <h6 class="font-semibold">ATOMIC HABITS</h6>
+                            <p class="text-[12px] text-gray-400 font-bold"><i>James Clear</i></p>
+                        </div>
+                        <div class="w-[100%] md:grow lg:grow hidden md:block lg:block cursor-pointer">
+                            <figure>
+                                <img class="rounded-lg" src="./my_book.jpg" alt="">
+                            </figure>
+                            <h6 class="font-semibold">ATOMIC HABITS</h6>
+                            <p class="text-[12px] text-gray-400 font-bold"><i>James Clear</i></p>
+                        </div>
+                        <div class="w-[100%] md:grow lg:grow hidden md:hidden lg:block cursor-pointer" >
+                            <figure>
+                                <img class="rounded-lg" src="./my_book.jpg" alt="">
+                            </figure>
+                            <h6 class="font-semibold">ATOMIC HABITS</h6>
+                            <p class="text-[12px] text-gray-400 font-bold"><i>James Clear</i></p>
+                        </div>
+                        <div class="w-[100%] md:grow lg:grow hidden md:hidden lg:block cursor-pointer">
+                            <figure>
+                                <img class="rounded-lg" src="./my_book.jpg" alt="">
+                            </figure>
+                            <h6 class="font-semibold">ATOMIC HABITS</h6>
+                            <p class="text-[12px] text-gray-400 font-bold"><i>James Clear</i></p>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="flex flex-col gap-4 w-[100%]">
+                    <h6 class="text-gray-400 font-bold">ADVICE HOW-TO AND MISCELLANEOUS</h6>
+                    <div class="w-[100%] flex justify-between gap-6">
+                        <div class="w-[100%] md:grow lg:grow">
+                            <figure>
+                                <img class="rounded-lg" src="./my_book.jpg" alt="">
+                            </figure>
+                            <h6 class="font-semibold">ATOMIC HABITS</h6>
+                            <p class="text-[12px] text-gray-400 font-bold"><i>James Clear</i></p>
+                        </div>
+                        <div class="w-[100%] md:grow lg:grow hidden md:block lg:block ">
+                            <figure>
+                                <img class="rounded-lg" src="./my_book.jpg" alt="">
+                            </figure>
+                            <h6 class="font-semibold">ATOMIC HABITS</h6>
+                            <p class="text-[12px] text-gray-400 font-bold"><i>James Clear</i></p>
+                        </div>
+                        <div class="w-[100%] md:grow lg:grow hidden md:block lg:block ">
+                            <figure>
+                                <img class="rounded-lg" src="./my_book.jpg" alt="">
+                            </figure>
+                            <h6 class="font-semibold">ATOMIC HABITS</h6>
+                            <p class="text-[12px] text-gray-400 font-bold"><i>James Clear</i></p>
+                        </div>
+                        <div class="w-[100%] md:grow lg:grow hidden md:hidden lg:block">
+                            <figure>
+                                <img class="rounded-lg" src="./my_book.jpg" alt="">
+                            </figure>
+                            <h6 class="font-semibold">ATOMIC HABITS</h6>
+                            <p class="text-[12px] text-gray-400 font-bold"><i>James Clear</i></p>
+                        </div>
+                        <div class="w-[100%] md:grow lg:grow hidden md:hidden lg:block">
+                            <figure>
+                                <img class="rounded-lg" src="./my_book.jpg" alt="">
+                            </figure>
+                            <h6 class="font-semibold">ATOMIC HABITS</h6>
+                            <p class="text-[12px] text-gray-400 font-bold"><i>James Clear</i></p>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="flex flex-col gap-4 w-[100%]">
+                    <h6 class="text-gray-400 font-bold">ADVICE HOW-TO AND MISCELLANEOUS</h6>
+                    <div class="w-[100%] flex justify-between gap-6">
+                        <div class="w-[100%] md:grow lg:grow">
+                            <figure>
+                                <img class="rounded-lg" src="./my_book.jpg" alt="">
+                            </figure>
+                            <h6 class="font-semibold">ATOMIC HABITS</h6>
+                            <p class="text-[12px] text-gray-400 font-bold"><i>James Clear</i></p>
+                        </div>
+                        <div class="w-[100%] md:grow lg:grow hidden md:block lg:block ">
+                            <figure>
+                                <img class="rounded-lg" src="./my_book.jpg" alt="">
+                            </figure>
+                            <h6 class="font-semibold">ATOMIC HABITS</h6>
+                            <p class="text-[12px] text-gray-400 font-bold"><i>James Clear</i></p>
+                        </div>
+                        <div class="w-[100%] md:grow lg:grow hidden md:block lg:block ">
+                            <figure>
+                                <img class="rounded-lg" src="./my_book.jpg" alt="">
+                            </figure>
+                            <h6 class="font-semibold">ATOMIC HABITS</h6>
+                            <p class="text-[12px] text-gray-400 font-bold"><i>James Clear</i></p>
+                        </div>
+                        <div class="w-[100%] md:grow lg:grow hidden md:hidden lg:block">
+                            <figure>
+                                <img class="rounded-lg" src="./my_book.jpg" alt="">
+                            </figure>
+                            <h6 class="font-semibold">ATOMIC HABITS</h6>
+                            <p class="text-[12px] text-gray-400 font-bold"><i>James Clear</i></p>
+                        </div>
+                        <div class="w-[100%] md:grow lg:grow hidden md:hidden lg:block">
+                            <figure>
+                                <img class="rounded-lg" src="./my_book.jpg" alt="">
+                            </figure>
+                            <h6 class="font-semibold">ATOMIC HABITS</h6>
+                            <p class="text-[12px] text-gray-400 font-bold"><i>James Clear</i></p>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="flex flex-col gap-4 w-[100%]">
+                    <h6 class="text-gray-400 font-bold">ADVICE HOW-TO AND MISCELLANEOUS</h6>
+                    <div class="w-[100%] flex justify-between gap-6">
+                        <div class="w-[100%] md:grow lg:grow">
+                            <figure>
+                                <img class="rounded-lg" src="./my_book.jpg" alt="">
+                            </figure>
+                            <h6 class="font-semibold">ATOMIC HABITS</h6>
+                            <p class="text-[12px] text-gray-400 font-bold"><i>James Clear</i></p>
+                        </div>
+                        <div class="w-[100%] md:grow lg:grow hidden md:block lg:block ">
+                            <figure>
+                                <img class="rounded-lg" src="./my_book.jpg" alt="">
+                            </figure>
+                            <h6 class="font-semibold">ATOMIC HABITS</h6>
+                            <p class="text-[12px] text-gray-400 font-bold"><i>James Clear</i></p>
+                        </div>
+                        <div class="w-[100%] md:grow lg:grow hidden md:block lg:block ">
+                            <figure>
+                                <img class="rounded-lg" src="./my_book.jpg" alt="">
+                            </figure>
+                            <h6 class="font-semibold">ATOMIC HABITS</h6>
+                            <p class="text-[12px] text-gray-400 font-bold"><i>James Clear</i></p>
+                        </div>
+                        <div class="w-[100%] md:grow lg:grow hidden md:hidden lg:block">
+                            <figure>
+                                <img class="rounded-lg" src="./my_book.jpg" alt="">
+                            </figure>
+                            <h6 class="font-semibold">ATOMIC HABITS</h6>
+                            <p class="text-[12px] text-gray-400 font-bold"><i>James Clear</i></p>
+                        </div>
+                        <div class="w-[100%] md:grow lg:grow hidden md:hidden lg:block">
+                            <figure>
+                                <img class="rounded-lg" src="./my_book.jpg" alt="">
+                            </figure>
+                            <h6 class="font-semibold">ATOMIC HABITS</h6>
+                            <p class="text-[12px] text-gray-400 font-bold"><i>James Clear</i></p>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="flex flex-col gap-4 w-[100%]">
+                    <h6 class="text-gray-400 font-bold">ADVICE HOW-TO AND MISCELLANEOUS</h6>
+                    <div class="w-[100%] flex justify-between gap-6">
+                        <div class="w-[100%] md:grow lg:grow">
+                            <figure>
+                                <img class="rounded-lg" src="./my_book.jpg" alt="">
+                            </figure>
+                            <h6 class="font-semibold">ATOMIC HABITS</h6>
+                            <p class="text-[12px] text-gray-400 font-bold"><i>James Clear</i></p>
+                        </div>
+                        <div class="w-[100%] md:grow lg:grow hidden md:block lg:block ">
+                            <figure>
+                                <img class="rounded-lg" src="./my_book.jpg" alt="">
+                            </figure>
+                            <h6 class="font-semibold">ATOMIC HABITS</h6>
+                            <p class="text-[12px] text-gray-400 font-bold"><i>James Clear</i></p>
+                        </div>
+                        <div class="w-[100%] md:grow lg:grow hidden md:block lg:block ">
+                            <figure>
+                                <img class="rounded-lg" src="./my_book.jpg" alt="">
+                            </figure>
+                            <h6 class="font-semibold">ATOMIC HABITS</h6>
+                            <p class="text-[12px] text-gray-400 font-bold"><i>James Clear</i></p>
+                        </div>
+                        <div class="w-[100%] md:grow lg:grow hidden md:hidden lg:block">
+                            <figure>
+                                <img class="rounded-lg" src="./my_book.jpg" alt="">
+                            </figure>
+                            <h6 class="font-semibold">ATOMIC HABITS</h6>
+                            <p class="text-[12px] text-gray-400 font-bold"><i>James Clear</i></p>
+                        </div>
+                        <div class="w-[100%] md:grow lg:grow hidden md:hidden lg:block">
+                            <figure>
+                                <img class="rounded-lg" src="./my_book.jpg" alt="">
+                            </figure>
+                            <h6 class="font-semibold">ATOMIC HABITS</h6>
+                            <p class="text-[12px] text-gray-400 font-bold"><i>James Clear</i></p>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    <section id="poppingup" class="hidden w-[100%] h-[100vh] fixed z-10 top-0 bg-black bg-opacity-30 flex flex-col justify-center items-center overflow-y-scroll">
+        
+    </section>
+    <section id="shopping-list" class="hidden max-w-[320px] md:[100%] w-[100%] md:max-w-[100%] relative">
+            <div class="max-w-[1400px] mx-auto flex flex-col md:flex-col lg:flex-row w-[100%] pt-4">
+            <aside class="hidden lg:left-0 lg:top-16 lg:sticky lg:flex flex-col lg:flex-col md:hidden justify-between gap-10 lg:gap-0 h-[600px] lg:h-[1000px] md:h-[400px] lg:w-[25%] min-w-[280px]">
+                <div class="flex gap-6 flex-col h-[40vh] lg:h-[45%] md:h-[100%] w-[100%] text-xl font-normal text-gray-600 list-none bg-gradient-to-t from-purple-400 to-indigo-500 md:min-w-[65%] md:w-[100%] rounded-xl">
+                    <h1 class="text-center text-white text-2xl">Support Ukraine</h1>
+                    <div class="overflow-y-auto no-scrollbar scroll-smooth flex flex-col gap-5 h-[66%] items-start pl-8 md:pl-16 lg:pl-8">
+                            <li class="flex gap-2 text-lg text-white items-center justify-center cursor-pointer"> <span id="support-id">01</span><img src="https://yevhenii2022.github.io/team-proj-js-book-app/01-found-1.a728105c.png" alt=""></li>
+                            <li class="flex gap-2 text-lg text-white items-center justify-center cursor-pointer"> <span id="support-id">02</span><img src="https://yevhenii2022.github.io/team-proj-js-book-app/02-found-1.feda50b1.png" alt=""></li>
+                            <li class="flex gap-2 text-lg text-white items-center justify-center cursor-pointer"> <span id="support-id">03</span><img src="https://yevhenii2022.github.io/team-proj-js-book-app/03-found-1.89276286.png" alt=""></li>
+                            <li class="flex gap-2 text-lg text-white items-center justify-center cursor-pointer"> <span id="support-id">04</span><img src="https://yevhenii2022.github.io/team-proj-js-book-app/04-found-1.cbff70d4.png" alt=""></li>
+                            <li class="flex gap-2 text-lg text-white items-center justify-center cursor-pointer"> <span id="support-id">05</span><img src="https://yevhenii2022.github.io/team-proj-js-book-app/05-found-1.0fdab6a1.png" alt=""></li>
+                            <li class="flex gap-2 text-lg text-white items-center justify-center cursor-pointer"> <span id="support-id">06</span><img src="https://yevhenii2022.github.io/team-proj-js-book-app/06-found-1.c5359439.png" alt=""></li>
+                            <li class="flex gap-2 text-lg text-white items-center justify-center cursor-pointer"> <span id="support-id">07</span><img src="https://yevhenii2022.github.io/team-proj-js-book-app/07-found-1.174022ef.png" alt=""></li>
+                            <li class="flex gap-2 text-lg text-white items-center justify-center cursor-pointer"> <span id="support-id">08</span><img src="https://yevhenii2022.github.io/team-proj-js-book-app/08-found-1.7aca5d21.png" alt=""></li>
+                    </div>
+                    <div class="flex justify-center">
+                        <p class="rounded-[50%] h-10 w-10 text-center flex justify-center items-center cursor-pointer bg-white"><i class="fa-solid fa-angle-down" style="color: black;"></i></p>
+                    </div>
+                </div>
+            </aside>
+            <div id="book-shelf" class="px-2 md:px-8 grow">
+                <h1 class="text-[2.5rem] font-bold mb-8">Shopping <span class="text-blue-700">List</span></h1>
+                <div id="shopping-container" class="overflow-y-auto custom-scroll-bar md:h-[120vh] h-[140vh] flex flex-col gap-8">
+          
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="sign-page" class="hidden flex flex-col justify-center items-center h-[90vh] w-[100%] max-w-[380px] md:max-w-[100%]">
+        <div class="flex flex-col justify-center items-center gap-8 border-2 border-black rounded-lg w-[100%] max-w-[380px] p-8 md:pt-16 bg-white md:w-[50%] max-w-[600px]">
+            <form action="" id="sign-up" class="flex flex-col gap-4 w-[100%] text-xl">
+                <input type="text" name="Name" id="name" required placeholder="NAME" class="border-2 border-black py-2 px-6 rounded-3xl">
+                <input type="email" name="Email" required placeholder="EMAIL" class="border-2 border-black py-2 px-6 rounded-3xl">
+                <input type="password" placeholder="PASSWORD" class="border-2 border-black py-2 px-6 rounded-3xl">
+                <input type="submit" name="signup" id="register" value="SIGN UP" class="bg-black text-white cursor-pointer py-3 px-6 rounded-3xl">
+            </form>
+            <form action="" id="sign-in" class="hidden flex flex-col gap-4 w-[100%] text-xl">
+                <input type="email" name="Email" required placeholder="EMAIL" class="border-2 border-black py-2 px-6 rounded-3xl">
+                <input type="password" placeholder="PASSWORD" class="border-2 border-black py-2 px-6 rounded-3xl">
+                <input type="submit" name="signup" id="login" value="SIGN IN" class="bg-black text-white cursor-pointer py-3 px-6 rounded-3xl">
+            </form>
+            <small class="hidden">wrong password or email</small>
+            <div class="flex gap-4">
+                <button id="show-register" value="SIGN UP"><u>SIGN UP</u></button>
+                <button id="show-login" value="SIGN IN"><u>SIGN IN</u></button>
+            </div>
+        </div>
+    </section>
+    <script>
+        const user = document.getElementById('showUser');
+        const showRegister = document.getElementById('show-register');
+        const showLogin = document.getElementById('show-login');
+        const BookBtn = document.getElementById('book-btn');
+        const Home_Btn = document.getElementById('homeBtn');
+        const shop_Btn = document.getElementById('shopBtn');
+        const popSection = document.getElementById('poppingup');
+        const bookRack = document.getElementById('book-shelf');
+        const listOfItems = document.getElementById('categories-list');
+        const shopContainer = document.getElementById('shopping-container');
+        const myHome = document.getElementById('Home');
+        const signPage = document.getElementById('sign-page');
+        const signUp = document.getElementById('sign-up');
+        const logIn = document.getElementById('sign-in');
+        const body = document.getElementById('body');
+        const signUpBtn = document.getElementById('registerBtn');
+    
+        let isLoggedIn;
+        let storedJsonString;
+        let storedUserObject;
+        let jsonString1
+
+        showRegister.style.color = 'blue';
+
+        showLogin.addEventListener('click',()=>{
+            logIn.style.display = 'flex';
+            signUp.style.display = 'none';
+            showLogin.style.color = 'blue';
+            showRegister.style.color = 'black';
+        });
+
+        showRegister.addEventListener('click',()=>{
+            logIn.style.display = 'none';
+            signUp.style.display = 'flex';
+            showLogin.style.color = 'black';
+            showRegister.style.color = 'blue';
+            signPage.children[0].children[2].style.display = 'none';
+        });
+
+        signUpBtn.addEventListener('click',()=>{
+            myHome.style.display = 'none';
+            signPage.style.display = 'flex';
+            body.style.backgroundColor = 'rgb(75,161,240)';
+            Home_Btn.style.display = 'none';
+            shop_Btn.style.display = 'none';
+            shopping_List.style.display = 'none';
+        });
+
+
+
+        signUp.addEventListener('submit',(event)=>{
+            event.preventDefault();
+            var userObject = {
+                name: event.target[0].value,
+                email: event.target[1].value,
+                password: event.target[2].value
+            };
+            var jsonString = JSON.stringify(userObject);
+            localStorage.setItem("userData", jsonString);
+                signPage.style.display = 'none';
+                Home_Btn.style.display = 'flex';
+                shop_Btn.style.display = 'flex';
+                shop_Btn.classList.remove('selected-yellow');
+                Home_Btn.classList.add('selected-yellow');
+                home_Section.style.display = 'flex';
+                shopping_List.style.display = 'none';
+                popSection.style.display = 'none';
+                body.style.backgroundColor = 'white';
+                signUpBtn.style.display = 'none';
+                user.style.display = 'block';
+                storedJsonString = localStorage.getItem("userData");
+                storedUserObject = JSON.parse(storedJsonString);
+                if(storedUserObject){
+                    user.children[0].children[0].innerHTML = `<i class="fa-regular fa-user"></i>${storedUserObject.name}`;
+                }
+                isLoggedIn = true;
+                jsonString1 = JSON.stringify(isLoggedIn);
+                localStorage.setItem("isLoggedIn", jsonString1);
+        });
+        storedJsonString = localStorage.getItem("userData");
+        storedUserObject = JSON.parse(storedJsonString);
+        if(storedUserObject){
+            user.children[0].children[0].innerHTML = "";
+            user.children[0].children[0].innerHTML = `<i class="fa-regular fa-user"></i>${storedUserObject.name}`;
+        }
+
+        let ik =1;
+        user.children[0].addEventListener('click',()=>{
+            if(ik%2 !== 0){
+                user.children[1].style.display = 'flex';
+                ik++;
+            }else{
+                user.children[1].style.display = 'none';
+                ik--;
+            }
+            
+        })
+        logIn.addEventListener('submit',(event)=>{
+            event.preventDefault();
+            if(storedUserObject.email === event.target[0].value && storedUserObject.password === event.target[1].value){
+                signPage.style.display = 'none';
+                Home_Btn.style.display = 'flex';
+                shop_Btn.style.display = 'flex';
+                shop_Btn.classList.remove('selected-yellow');
+                Home_Btn.classList.add('selected-yellow');
+                home_Section.style.display = 'flex';
+                shopping_List.style.display = 'none';
+                popSection.style.display = 'none';
+                body.style.backgroundColor = 'white';
+                signUpBtn.style.display = 'none';
+                user.style.display = 'block';
+                signPage.children[0].children[2].style.display = 'none';
+                isLoggedIn = true;
+                jsonString1 = JSON.stringify(isLoggedIn);
+                localStorage.setItem("isLoggedIn", jsonString1);
+                console.log("Hello I am logged");
+            }else{
+                signPage.children[0].children[2].style.display = 'block';
+                signPage.children[0].children[2].style.color = 'red';
+            }
+            console.log(event.target[0].value);
+            console.log(event.target[1].value);
+        })
+
+        
+
+        
+        Home_Btn.classList.add('selected-yellow');
+
+        function removeClass(className){
+            var elements = document.querySelectorAll("*");
+            for (var i = 0; i < elements.length; i++) {
+                 elements[i].classList.remove(className);
+            }
+        }
+        //rendering the selected category books
+        const getMyBook = async(category)=>{
+            let mycategory = category.replace(/\s+/g,'+');
+            const response = await fetch(`https://books-backend.p.goit.global/books/category?category=${mycategory}`)
+            const data = await response.json();
+            console.log(data);
+            getSelectedCategory(data,category);
+        };
+
+        //rendering the Best books
+        const data = async ()=>{
+            const response = await fetch('https://books-backend.p.goit.global/books/top-books');
+            const data = await response.json();
+            data.unshift({list_name: 'All Categories'});
+            console.log(data);
+            renderList(data);
+            renderBestBooks(data);
+            listOfItems.addEventListener('click', (event)=>{
+                scrollToTop();
+                const valueAt = event.target.innerText;
+                if(valueAt === 'All Categories'){
+                    removeClass('active');
+                    event.target.classList.add('active');
+                    renderBestBooks(data);
+                    console.log('triggered');
+                }else if(valueAt.length<100){
+                    removeClass('active');
+                    event.target.classList.add('active');
+                    getMyBook(valueAt);
+                    console.log("hello");
+                }
+            });
+        };
+        
+        //rendering the category list in aside
+        const renderList = (data)=>{
+            let i = 1;
+            data.forEach(element => {
+                const listItem = document.createElement('p');
+                let classNameString = 'hover:scale-[1.01] hover:text-blue-700 hover:font-medium hover:text-2xl cursor-pointer flex ease-in duration-200 w-[100%]';
+                let classArr = classNameString.split(" ");
+                listItem.classList.add(...classArr);
+                listItem.innerHTML = element.list_name;
+                if(i===1){
+                    listItem.classList.add('active');
+                    i++;
+                }
+                listOfItems.appendChild(listItem);
+            });
+            console.log(data);
+        };
+        let headingName1 = 'Best Seller Books';
+        const renderBestBooks = (data)=>{
+                bookRack.innerHTML = "";
+                let headingName = headingName1;
+                // if(element.list_name === 'All Categories'){
+                //     headingName = headingName1;
+                // }
+                let separatedString = headingName.split(" ");
+                let headingFirst = separatedString.slice(0,separatedString.length-1).join(" ");
+                let headingLast = separatedString.slice(separatedString.length-1).join(" ");
+                const heading = document.createElement('h1');
+                let headingClassString = 'text-[2.5rem] font-bold mb-8'; 
+                let headingClassArr = headingClassString.split(" ");
+                heading.classList.add(...headingClassArr);
+                heading.innerHTML = `${headingFirst} <span class="text-blue-700">${headingLast}</span>`;
+                bookRack.appendChild(heading);
+                const booksMainContainer = document.createElement('div');
+                let classMainContainerString = 'w-[100%] flex flex-col gap-16';
+                let arrayMainContainer = classMainContainerString.split(" ");
+                booksMainContainer.classList.add(...arrayMainContainer);
+                bookRack.appendChild(booksMainContainer);
+                for(let j=1;j<data.length;j++){
+                    const myBooks = document.createElement('div');
+                    let classStr = 'flex flex-col gap-8 w-[100%]';
+                    let classArr = classStr.split(" ");
+                    myBooks.classList.add(...classArr);
+                    booksMainContainer.appendChild(myBooks);
+                    const bookTitle = document.createElement('h6');
+                    let headingClassString = 'text-gray-400 font-bold'; 
+                    let headingClassArr = headingClassString.split(" ");
+                    bookTitle.classList.add(...headingClassArr);
+                    bookTitle.innerHTML = data[j].list_name;
+                    const bookShelf = document.createElement('div');
+                    let classStr2 = 'flex justify-between gap-6 h-[100%]';
+                    let classArr2 = classStr2.split(" ");
+                    bookShelf.classList.add(...classArr2);
+                    const myButton = document.createElement('button');
+                    myButton.innerText = 'See More';
+                    myButton.value = data[j].list_name;
+                    //added listener to see more for books selected to be rendered
+                    myButton.addEventListener('click',(event)=>{
+                        removeClass('active');
+                        scrollToTop();
+                        getMyBook(event.target.value);
+                    })
+                    let classBtnstr = 'hover:bg-blue-700 hover:text-white font-medium border-2 border-blue-700 active:scale-[0.97] rounded-2xl py-1 px-2 text-center w-[6rem] mx-auto md:ml-auto md:mr-0';
+                    let classBtnArr = classBtnstr.split(" ");
+                    myButton.classList.add(...classBtnArr);
+                    myBooks.append(bookTitle, bookShelf,myButton);
+                    
+                    for(let i=0;i<data[j].books.length;i++){
+                        const bookItem =document.createElement('div');
+                        let classStr3 = 'w-[100%] md:grow lg:grow cursor-pointer justify-between flex flex-col gap-2';
+                        if(i===1 || i===2){
+                            classStr3 = 'w-[100%] md:grow lg:grow hidden justify-between md:flex flex-col gap-2 lg:flex cursor-pointer';
+                        }else if(i>2){
+                            classStr3 = 'w-[100%] md:grow lg:grow hidden justify-between lg:flex flex-col gap-2 cursor-pointer';
+                        }
+                        
+                        let classArr3 = classStr3.split(" ");
+                        bookItem.classList.add(...classArr3);
+                        //book item selection and popup
+                        bookItem.addEventListener('click',(event)=>{
+                            popSection.style.display = "flex";
+                            popSection.innerHTML = "";
+                            let name = bookItem.children[1].children[0].innerText;
+                            const filteredData = data[j].books.filter((element)=> element.title.toLowerCase().includes(name.toLowerCase()));
+                            console.log(filteredData[0]);
+                            console.log(name);
+                            const popup = document.createElement('div');
+                            let popUpCss = 'border-2 border-black w-[90%] max-w-[280px] md:w-[70%] md:max-w-[500px] rounded-lg bg-white px-4 pb-8';
+                            let popUpArr = popUpCss.split(" ");
+                            popup.classList.add(...popUpArr);
+                            let desc = filteredData[0].description;
+                            if(desc===""){
+                                desc ="No description available.";
+                            }
+                            popup.innerHTML = `<button class="ml-auto block font-semibold">X</button>
+                                <div class="flex flex-col items-start md:flex-row md:gap-4">
+                                    <img class="md:w-[40%] rounded-lg" src="${filteredData[0].book_image}" alt="">
+                                    <div class="flex flex-col gap-4">
+                                        <div>
+                                            <h6 class="font-semibold">${filteredData[0].title}</h6>
+                                            <p class="text-[12px] text-gray-400 font-bold"><i>${filteredData[0].author}</i></p>
+                                        </div>
+                                        <div>
+                                        <small>${desc}</small>
+                                        <picture class="flex gap-4 w-[100%] items-center mt-8">
+                                                <a href=${filteredData[0].buy_links[0].url} target="_blank"><img class="hover:shadow-lg h-[1rem] cursor-pointer" src="https://yevhenii2022.github.io/team-proj-js-book-app/amazon-shop-2x.01f59d3f.png" alt="amazon logo"></a>
+                                                <a href=${filteredData[0].buy_links[1].url} target="_blank"><img class="hover:shadow-lg" src="https://yevhenii2022.github.io/team-proj-js-book-app/apple-shop-1x.aeb5cfd2.png" alt="apple shop"></a>
+                                                <a href=${filteredData[0].buy_links[4].url} target="_blank"><img class="hover:shadow-lg" src="https://yevhenii2022.github.io/team-proj-js-book-app/bookshop-1x.d3877644.png" alt="book shop"></a>
+                                        </picture> 
+                                        </div>
+                                    </div>
+                                </div>
+                                <small class="hidden">Product Added</small>
+                                <button class="mt-8 border border-blue-700 rounded-3xl hover:bg-blue-600 hover:text-white font-medium active:scale-[0.97] text-center py-2 px-4 mx-auto block">Add to Shopping List</button>`;
+                            popSection.appendChild(popup);
+                            popup.children[0].addEventListener('click',()=>{
+                                popSection.style.display = "none";
+                            })
+                            
+                            popup.children[3].addEventListener('click',()=>{
+                                if(isLoggedIn){
+                                    console.log("I am Added");
+                                    console.log(filteredData[0]);
+                                    const outerBox = document.createElement('div');
+                                    outerBox.style.width = "100%";
+                                    outerBox.style.height = "30%";
+                                    outerBox.innerHTML = `<div class="h-[100%] border-2 border-blue-700 flex flex-col gap-8 grow w-[100%] rounded-xl p-4">
+                                            <div class="flex gap-6 relative md:grow">
+                                                <button onclick="cardDelete(this)" class="absolute right-0 bg-blue-700 py-1 px-2 rounded-full"><i class="fa-solid fa-trash" style="color: #ffffff;"></i></button>
+                                                <figure class="max-w-[140px] w-[30%] md:h-[100%]">
+                                                    <img class="md:h-[100%] rounded-lg" src="${filteredData[0].book_image}" alt="">
+                                                    <p class="md:hidden text-[12px] text-gray-400 font-bold"><i>${filteredData[0].author}</i></p>
+                                                </figure>
+                                                <div class="md:grow md:flex md:flex-col md:justify-between">
+                                                    <div>
+                                                        <h6 class="font-semibold w-[80%]">${filteredData[0].title}</h6>
+                                                        <p class="text-[12px] text-gray-400 font-bold">${filteredData[0].list_name}</p>
+                                                        <small class="mt-4 hidden md:block">${desc}</small>
+                                                    </div>
+                                                    <div class="flex justify-between items-center">
+                                                        <p class="hidden md:block text-[12px] text-gray-400 font-bold"><i>${filteredData[0].author}</i></p>
+                                                        <picture class="flex gap-4 w-[100%] md:w-auto items-center mt-8 md:mt-0">
+                                                            <a href="${filteredData[0].buy_links[0].url}" target="_blank"><img class="hover:shadow-lg h-[1rem] cursor-pointer" src="https://yevhenii2022.github.io/team-proj-js-book-app/amazon-shop-2x.01f59d3f.png" alt="amazon logo"></a>
+                                                            <a href="${filteredData[0].buy_links[1].url}" target="_blank"><img class="hover:shadow-lg" src="https://yevhenii2022.github.io/team-proj-js-book-app/apple-shop-1x.aeb5cfd2.png" alt="apple shop"></a>
+                                                            <a href="${filteredData[0].buy_links[4].url}" target="_blank"><img class="hover:shadow-lg" src="https://yevhenii2022.github.io/team-proj-js-book-app/bookshop-1x.d3877644.png" alt="book shop"></a>
+                                                        </picture> 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <small class="md:hidden">${desc}</small>
+                                        </div>
+                                    `;
+                                    shopContainer.appendChild(outerBox);
+                                    popup.children[3].style.display = 'block';
+                                }else{
+                                    alert("login first");
+                                }
+                            });
+
+                        });
+                        bookItem.innerHTML = `<figure class="lg:h-[70%] md:h-[70%] grow">
+                                <img class="rounded-lg lg:h-[100%] md:h-[100%] grow" src=${data[j].books[i].book_image} alt="">
+                            </figure>
+                            <div class="flex flex-col h-[20%]">
+                                <h6 class="font-semibold">${data[j].books[i].title}</h6>
+                                <p class="text-[12px] text-gray-400 font-bold"><i>${data[j].books[i].author}</i></p>
+                            </div>`;
+                            
+                        bookShelf.appendChild(bookItem);
+                    }
+                }
+        };
+        
+        //getting the selected books from the api for rendering
+        const getSelectedCategory = (data,selected)=>{
+                    bookRack.innerHTML = "";
+                    let headingName = selected;
+                // if(element.list_name === 'All Categories'){
+                //     headingName = headingName1;
+                // }
+                    let separatedString = headingName.split(" ");
+                    let headingFirst = separatedString.slice(0,separatedString.length-1).join(" ");
+                    let headingLast = separatedString.slice(separatedString.length-1).join(" ");
+                    const heading = document.createElement('h1');
+                    let headingClassString = 'text-[2.5rem] font-bold mb-8'; 
+                    let headingClassArr = headingClassString.split(" ");
+                    heading.classList.add(...headingClassArr);
+                    heading.innerHTML = `${headingFirst} <span class="text-blue-700">${headingLast}</span>`;
+                    bookRack.appendChild(heading);
+                    const booksMainContainer = document.createElement('div');
+                    let classMainContainerString = 'w-[100%] flex flex-col gap-16';
+                    let arrayMainContainer = classMainContainerString.split(" ");
+                    booksMainContainer.classList.add(...arrayMainContainer);
+                    bookRack.appendChild(booksMainContainer);
+
+                    const myBooks = document.createElement('div');
+                    let classStr = 'flex flex-col gap-4 w-[100%]';
+                    let classArr = classStr.split(" ");
+                    myBooks.classList.add(...classArr);
+                    booksMainContainer.appendChild(myBooks);
+                    const bookShelf = document.createElement('div');
+                    let classStr2 = 'flex flex-wrap w-[100%] gap-8 h-[100%]';
+                    let classArr2 = classStr2.split(" ");
+                    bookShelf.classList.add(...classArr2);
+                    myBooks.append(bookShelf);
+                    data.forEach((element)=>{
+                        const bookItem =document.createElement('div');
+                        let classStr3 = 'w-[100%] md:w-[30%] lg:w-[160px] cursor-pointer justify-between flex flex-col gap-2';
+                        let classArr3 = classStr3.split(" ");
+                        bookItem.classList.add(...classArr3);
+                        bookItem.innerHTML = `<figure class="lg:h-[70%] md:h-[70%] grow">
+                                <img class="rounded-lg lg:h-[100%] md:h-[100%] grow" src=${element.book_image} alt="">
+                            </figure>
+                            <div class="flex flex-col h-[20%]">
+                                <h6 class="font-semibold">${element.title}</h6>
+                                <p class="text-[12px] text-gray-400 font-bold"><i>${element.author}</i></p>
+                            </div>`;
+                        bookItem.addEventListener('click',(event)=>{
+                            popSection.style.display = "flex";
+                            popSection.innerHTML = "";
+                            let name = bookItem.children[1].children[0].innerText;
+                            const filteredData = element;
+                            const popup = document.createElement('div');
+                            let popUpCss = 'border-2 border-black w-[90%] max-w-[280px] md:w-[70%] md:max-w-[500px] rounded-lg bg-white px-4 pb-8';
+                            let popUpArr = popUpCss.split(" ");
+                            popup.classList.add(...popUpArr);
+                            let desc = filteredData.description;
+                            if(desc===""){
+                                desc ="No description available.";
+                            }
+                            popup.innerHTML = `<button class="ml-auto block font-semibold">X</button>
+                                <div class="flex flex-col items-start md:flex-row md:gap-4">
+                                    <img class="md:w-[40%] rounded-lg" src="${filteredData.book_image}" alt="">
+                                    <div class="flex flex-col gap-4">
+                                        <div>
+                                            <h6 class="font-semibold">${filteredData.title}</h6>
+                                            <p class="text-[12px] text-gray-400 font-bold"><i>${filteredData.author}</i></p>
+                                        </div>
+                                        <div>
+                                        <small>${desc}</small>
+                                        <picture class="flex gap-4 w-[100%] items-center mt-8">
+                                                <a href=${filteredData.buy_links[0].url} target="_blank"><img class="hover:shadow-lg h-[1rem] cursor-pointer" src="https://yevhenii2022.github.io/team-proj-js-book-app/amazon-shop-2x.01f59d3f.png" alt="amazon logo"></a>
+                                                <a href=${filteredData.buy_links[1].url} target="_blank"><img class="hover:shadow-lg" src="https://yevhenii2022.github.io/team-proj-js-book-app/apple-shop-1x.aeb5cfd2.png" alt="apple shop"></a>
+                                                <a href=${filteredData.buy_links[4].url} target="_blank"><img class="hover:shadow-lg" src="https://yevhenii2022.github.io/team-proj-js-book-app/bookshop-1x.d3877644.png" alt="book shop"></a>
+                                        </picture> 
+                                        </div>
+                                    </div>
+                                </div>
+                                <small class="hidden">Product Added</small>
+                                <button class="mt-8 border border-blue-700 rounded-3xl hover:bg-blue-600 hover:text-white font-medium active:scale-[0.97] text-center py-2 px-4 mx-auto block">Add to Shopping List</button>`;
+                            popSection.appendChild(popup);
+                            popup.children[0].addEventListener('click',()=>{
+                                popSection.style.display = "none";
+                            })
+                            popup.children[3].addEventListener('click',()=>{
+                                if(isLoggedIn){
+                                    console.log("I am Added");
+                                    console.log(filteredData);
+                                    const outerBox = document.createElement('div');
+                                    outerBox.style.width = "100%";
+                                    outerBox.style.height = "30%";
+                                    outerBox.innerHTML = `<div class="h-[100%] border-2 border-blue-700 flex flex-col gap-8 grow w-[100%] rounded-xl p-4">
+                                            <div class="flex gap-6 relative md:grow">
+                                                <button onclick="cardDelete(this)" class="absolute right-0 bg-blue-700 py-1 px-2 rounded-full"><i class="fa-solid fa-trash" style="color: #ffffff;"></i></button>
+                                                <figure class="max-w-[140px] w-[30%] md:h-[100%]">
+                                                    <img class="md:h-[100%] rounded-lg" src="${filteredData.book_image}" alt="">
+                                                    <p class="md:hidden text-[12px] text-gray-400 font-bold"><i>${filteredData.author}</i></p>
+                                                </figure>
+                                                <div class="md:grow md:flex md:flex-col md:justify-between">
+                                                    <div>
+                                                        <h6 class="font-semibold w-[80%]">${filteredData.title}</h6>
+                                                        <p class="text-[12px] text-gray-400 font-bold">${filteredData.list_name}</p>
+                                                        <small class="mt-4 hidden md:block">${desc}</small>
+                                                    </div>
+                                                    <div class="flex justify-between items-center">
+                                                        <p class="hidden md:block text-[12px] text-gray-400 font-bold"><i>${filteredData.author}</i></p>
+                                                        <picture class="flex gap-4 w-[100%] md:w-auto items-center mt-8 md:mt-0">
+                                                            <a href="${filteredData.buy_links[0].url}" target="_blank"><img class="hover:shadow-lg h-[1rem] cursor-pointer" src="https://yevhenii2022.github.io/team-proj-js-book-app/amazon-shop-2x.01f59d3f.png" alt="amazon logo"></a>
+                                                            <a href="${filteredData.buy_links[1].url}" target="_blank"><img class="hover:shadow-lg" src="https://yevhenii2022.github.io/team-proj-js-book-app/apple-shop-1x.aeb5cfd2.png" alt="apple shop"></a>
+                                                            <a href="${filteredData.buy_links[4].url}" target="_blank"><img class="hover:shadow-lg" src="https://yevhenii2022.github.io/team-proj-js-book-app/bookshop-1x.d3877644.png" alt="book shop"></a>
+                                                        </picture> 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <small class="md:hidden">${desc}</small>
+                                        </div>
+                                    `;
+                                    shopContainer.appendChild(outerBox);
+                                    popup.children[2].style.display = 'block';
+                                }else{
+                                    alert('login First');
+                                }
+                                
+                            });
+                        });
+                            
+                        bookShelf.appendChild(bookItem);
+                    });
+        };
+        // fetching data from the API and rendering it to the DOM
+
+
+        function scrollToTop(){
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+        
+        const home_Section = document.getElementById('Home');
+        const shopping_List = document.getElementById('shopping-list');
+
+        shop_Btn.addEventListener('click',()=>{
+            if(isLoggedIn){
+                Home_Btn.classList.remove('selected-yellow');
+                shop_Btn.classList.add('selected-yellow');
+                shopping_List.style.display =  "block";
+                home_Section.style.display = "none";
+                body.style.backgroundColor = 'white';
+                console.log("done shopp");
+            }else{
+                alert('Please Login first!');
+            }
+        });
+        
+        Home_Btn.addEventListener('click', () => {
+            shop_Btn.classList.remove('selected-yellow');
+            Home_Btn.classList.add('selected-yellow');
+            home_Section.style.display = 'flex';
+            shopping_List.style.display = 'none';
+            popSection.style.display = 'none';
+            body.style.backgroundColor = 'white';
+        });
+        BookBtn.addEventListener('click', () => {
+            signPage.style.display = 'none';
+            Home_Btn.style.display = 'flex';
+            shop_Btn.style.display = 'flex';
+            shop_Btn.classList.remove('selected-yellow');
+            Home_Btn.classList.add('selected-yellow');
+            home_Section.style.display = 'flex';
+            shopping_List.style.display = 'none';
+            popSection.style.display = 'none';
+            body.style.backgroundColor = 'white';
+        });
+        
+        // const CartCard = document.querySelectorAll('.CartItemCard');
+        // CartCard.addEventListener('click',(event)=>{
+        //     console.log(event.target.parentElement.parentElement.parentElement.remove());
+        // });
+
+        function cardDelete(event){
+            if(event){
+                event.parentElement.parentElement.parentElement.remove();
+            }
+        }
+
+        if(storedUserObject){
+                signPage.style.display = 'none';
+                Home_Btn.style.display = 'flex';
+                shop_Btn.style.display = 'flex';
+                shop_Btn.classList.remove('selected-yellow');
+                Home_Btn.classList.add('selected-yellow');
+                home_Section.style.display = 'flex';
+                shopping_List.style.display = 'none';
+                popSection.style.display = 'none';
+                body.style.backgroundColor = 'white';
+                signUpBtn.style.display = 'none';
+                user.style.display = 'block';
+                signPage.children[0].children[2].style.display = 'none';
+        }
+
+        //pagination for shopping container
+
+        function logMeOut(){
+            myHome.style.display = 'none';
+            signPage.style.display = 'flex';
+            body.style.backgroundColor = 'rgb(75,161,240)';
+            Home_Btn.style.display = 'none';
+            shop_Btn.style.display = 'none';
+            shopping_List.style.display = 'none';
+            user.style.display = 'none';
+            signUpBtn.style.display = 'flex';
+            isLoggedIn = false;
+            // Convert the boolean value to a JSON string
+             jsonString1 = JSON.stringify(isLoggedIn);
+            // Store the JSON string in local storage under a key (e.g., "isLoggedIn")
+            localStorage.setItem("isLoggedIn", jsonString1);
+        }
+        var storedJsonString1 = localStorage.getItem("isLoggedIn");
+        // Parse the JSON string back to a boolean
+        var storedIsLoggedIn = JSON.parse(storedJsonString1);
+
+        if(storedIsLoggedIn){
+            user.style.display = 'flex';
+            signUpBtn.style.display = 'none';
+            data();
+        }else{
+            user.style.display = 'none';
+            signUpBtn.style.display = 'flex';
+            data();
+        }
+        
+    </script>
+
+</body>
+</html>
