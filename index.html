@@ -80,7 +80,7 @@
                     <input type="checkbox" value="" class="sr-only peer">
                     <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
                 </label>
-                <i class="fa-solid fa-bars text-2xl cursor-pointer hover:text-blue-600 active:scale-95 ease-in-out duration-300 lg:hidden md:hidden"></i>
+                <i id="hamburger-icon" class="fa-solid fa-bars text-2xl cursor-pointer hover:text-blue-600 active:scale-95 ease-in-out duration-300 lg:hidden md:hidden"></i>
                 <div class="hidden md:flex lg:flex">
                     <a href="#" id="registerBtn" class="sign-up-link border border-black p-2 flex justify-between items-center gap-16 rounded-xl bg-blue-600 text-white hover:bg-amber-400 ease-in-out duration-300 hover:text-black">
                         <p class="text-sm font-medium">Sign up</p>
@@ -100,7 +100,7 @@
                 </div>
             </div>
         </header>
-        <div id="Home" class="max-w-[1400px] mx-auto flex flex-col md:flex-col lg:flex-row w-[100%] pt-4">
+    <div id="Home" class="max-w-[1400px] mx-auto flex flex-col md:flex-col lg:flex-row w-[100%] pt-4">
         <aside class="lg:left-0 lg:top-16 lg:sticky flex flex-col lg:flex-col md:flex-row justify-between gap-10 lg:gap-0 h-[600px] lg:h-[1000px] md:h-[400px] md:w-[100%] lg:w-[40%] ">
             <div id="categories-list" class="custom-scroll-bar flex gap-6 flex-col h-[40vh] lg:h-[45%] md:h-[100%] scroll-smooth overflow-x-hidden overflow-y-auto w-[100%] md:max-w-[400px] md:w-[100%] text-xl font-normal text-gray-600 list-none pl-8"></div>
             <div class="flex gap-6 flex-col h-[40vh] lg:h-[45%] md:h-[100%] w-[100%] text-xl font-normal text-gray-600 list-none bg-gradient-to-t from-purple-400 to-indigo-500 md:min-w-[65%] md:w-[100%] rounded-xl">
@@ -387,6 +387,27 @@
             </div>
         </div>
     </section>
+    <section id="hamburger-section" ref="block" class="hidden md:hidden lg:hidden w-[100%] h-[100%] bg-gray-200 fixed top-[48px] z-10">
+        <a href="#" id="registerMobileBtn" class="w-[40%] mt-16 mx-auto sign-up-link border border-black p-2 flex justify-center items-center gap-16 rounded-xl bg-blue-600 text-white hover:bg-amber-400 ease-in-out duration-300 hover:text-black">
+            <p class="text-sm font-medium">Sign up</p>
+            <i class="fa-solid fa-arrow-right"></i>
+        </a>
+        <div id="showMobileUser" class="hidden relative">
+            <a href="#" class="user-link sign-up-link p-3 flex justify-between w-[60%] mt-16 mx-auto items-center gap-16 rounded-xl bg-blue-600 text-white hover:bg-amber-400 ease-in-out duration-300 hover:text-black">
+                <p class="text-sm font-medium flex gap-2 items-center justify-center"></p>
+                <i class="fa-solid fa-angle-down"></i>
+                <i class="fa-solid fa-angle-up hidden" style="color: #000000;"></i>
+            </a>
+            <a href="#" onclick="logMeOut()" class="hidden absolute w-[100%] sign-up-link border border-black p-2 flex justify-between items-center gap-16 rounded-xl bg-white hover:bg-amber-400 ease-in-out duration-300 hover:text-black">
+                <p class="text-sm font-medium">log out</p>
+                <i class="fa-solid fa-arrow-right"></i>
+            </a> 
+            <a id="shopMobileBtn" href="#" class="mt-8 mx-auto w-[60%] px-3 py-2 bg-blue-600 text-sm flex items-center justify-center gap-2 rounded-xl text-white hover:bg-amber-400 ease-in-out duration-300 hover:text-black">
+                <h3 class="antialiased font-medium">SHOPPING LIST</h3>
+                <i class="fa-solid fa-cart-shopping" style="color: #f9f9f9;"></i>
+            </a>
+        </div>
+    </section>
     <script>
         const user = document.getElementById('showUser');
         const showRegister = document.getElementById('show-register');
@@ -404,8 +425,11 @@
         const logIn = document.getElementById('sign-in');
         const body = document.getElementById('body');
         const signUpBtn = document.getElementById('registerBtn');
+        const hamburger = document.getElementById('hamburger-icon');
+        const hamburgerSection = document.getElementById('hamburger-section');
+        const mobileShop = document.getElementById('shopMobileBtn');
     
-        let isLoggedIn;
+        let storedIsLoggedIn;
         let storedJsonString;
         let storedUserObject;
         let jsonString1
@@ -463,15 +487,19 @@
                 if(storedUserObject){
                     user.children[0].children[0].innerHTML = `<i class="fa-regular fa-user"></i>${storedUserObject.name}`;
                 }
-                isLoggedIn = true;
-                jsonString1 = JSON.stringify(isLoggedIn);
+                storedIsLoggedIn = true;
+                jsonString1 = JSON.stringify(storedIsLoggedIn);
                 localStorage.setItem("isLoggedIn", jsonString1);
+                hamburgerSection.children[0].style.display = 'none';
+                hamburgerSection.children[1].style.display = 'block';
         });
         storedJsonString = localStorage.getItem("userData");
         storedUserObject = JSON.parse(storedJsonString);
         if(storedUserObject){
             user.children[0].children[0].innerHTML = "";
             user.children[0].children[0].innerHTML = `<i class="fa-regular fa-user"></i>${storedUserObject.name}`;
+            hamburgerSection.children[1].children[0].children[0].innerHTML = "";
+            hamburgerSection.children[1].children[0].children[0].innerHTML = `<i class="fa-regular fa-user"></i>${storedUserObject.name}`;
         }
 
         let ik =1;
@@ -484,7 +512,7 @@
                 ik--;
             }
             
-        })
+        });
         logIn.addEventListener('submit',(event)=>{
             event.preventDefault();
             if(storedUserObject.email === event.target[0].value && storedUserObject.password === event.target[1].value){
@@ -499,6 +527,8 @@
                 body.style.backgroundColor = 'white';
                 signUpBtn.style.display = 'none';
                 user.style.display = 'block';
+                hamburgerSection.children[0].style.display = 'none';
+                hamburgerSection.children[1].style.display = 'block';
                 signPage.children[0].children[2].style.display = 'none';
                 isLoggedIn = true;
                 jsonString1 = JSON.stringify(isLoggedIn);
@@ -677,7 +707,10 @@
                             })
                             
                             popup.children[3].addEventListener('click',()=>{
-                                if(isLoggedIn){
+                                storedJsonString1 = localStorage.getItem("isLoggedIn");
+                                // Parse the JSON string back to a boolean
+                                storedIsLoggedIn = JSON.parse(storedJsonString1);
+                                if(storedIsLoggedIn){
                                     console.log("I am Added");
                                     console.log(filteredData[0]);
                                     const outerBox = document.createElement('div');
@@ -717,8 +750,8 @@
                             });
 
                         });
-                        bookItem.innerHTML = `<figure class="lg:h-[70%] md:h-[70%] grow">
-                                <img class="rounded-lg lg:h-[100%] md:h-[100%] grow" src=${data[j].books[i].book_image} alt="">
+                        bookItem.innerHTML = `<figure class="lg:h-[70%] md:h-[70%] grow w-[100%]">
+                                <img class="rounded-lg lg:h-[100%] md:h-[100%] grow w-[100%]" src=${data[j].books[i].book_image} alt="">
                             </figure>
                             <div class="flex flex-col h-[20%]">
                                 <h6 class="font-semibold">${data[j].books[i].title}</h6>
@@ -767,8 +800,8 @@
                         let classStr3 = 'w-[100%] md:w-[30%] lg:w-[160px] cursor-pointer justify-between flex flex-col gap-2';
                         let classArr3 = classStr3.split(" ");
                         bookItem.classList.add(...classArr3);
-                        bookItem.innerHTML = `<figure class="lg:h-[70%] md:h-[70%] grow">
-                                <img class="rounded-lg lg:h-[100%] md:h-[100%] grow" src=${element.book_image} alt="">
+                        bookItem.innerHTML = `<figure class="lg:h-[70%] md:h-[70%] grow w-[100%]">
+                                <img class="rounded-lg lg:h-[100%] md:h-[100%] grow w-[100%]" src=${element.book_image} alt="">
                             </figure>
                             <div class="flex flex-col h-[20%]">
                                 <h6 class="font-semibold">${element.title}</h6>
@@ -812,7 +845,10 @@
                                 popSection.style.display = "none";
                             })
                             popup.children[3].addEventListener('click',()=>{
-                                if(isLoggedIn){
+                                storedJsonString1 = localStorage.getItem("isLoggedIn");
+                                // Parse the JSON string back to a boolean
+                                storedIsLoggedIn = JSON.parse(storedJsonString1);
+                                if(storedIsLoggedIn){
                                     console.log("I am Added");
                                     console.log(filteredData);
                                     const outerBox = document.createElement('div');
@@ -847,6 +883,7 @@
                                     shopContainer.appendChild(outerBox);
                                     popup.children[2].style.display = 'block';
                                 }else{
+                                    console.log(storedIsLoggedIn);
                                     alert('login First');
                                 }
                                 
@@ -867,7 +904,7 @@
         const shopping_List = document.getElementById('shopping-list');
 
         shop_Btn.addEventListener('click',()=>{
-            if(isLoggedIn){
+            if(storedIsLoggedIn){
                 Home_Btn.classList.remove('selected-yellow');
                 shop_Btn.classList.add('selected-yellow');
                 shopping_List.style.display =  "block";
@@ -888,6 +925,7 @@
             body.style.backgroundColor = 'white';
         });
         BookBtn.addEventListener('click', () => {
+            hamburgerSection.style.display = 'none';
             signPage.style.display = 'none';
             Home_Btn.style.display = 'flex';
             shop_Btn.style.display = 'flex';
@@ -922,6 +960,8 @@
                 body.style.backgroundColor = 'white';
                 signUpBtn.style.display = 'none';
                 user.style.display = 'block';
+                hamburgerSection.children[0].style.display = 'none';
+                hamburgerSection.children[1].style.display = 'block';
                 signPage.children[0].children[2].style.display = 'none';
         }
 
@@ -936,25 +976,79 @@
             shopping_List.style.display = 'none';
             user.style.display = 'none';
             signUpBtn.style.display = 'flex';
+            hamburgerSection.children[1].style.display = 'none';
+            hamburgerSection.children[0].style.display = 'flex';
+            hamburgerSection.style.display = 'none';
             isLoggedIn = false;
             // Convert the boolean value to a JSON string
-             jsonString1 = JSON.stringify(isLoggedIn);
+            jsonString1 = JSON.stringify(isLoggedIn);
             // Store the JSON string in local storage under a key (e.g., "isLoggedIn")
             localStorage.setItem("isLoggedIn", jsonString1);
         }
-        var storedJsonString1 = localStorage.getItem("isLoggedIn");
+        storedJsonString1 = localStorage.getItem("isLoggedIn");
         // Parse the JSON string back to a boolean
-        var storedIsLoggedIn = JSON.parse(storedJsonString1);
+        storedIsLoggedIn = JSON.parse(storedJsonString1);
+        console.log(storedIsLoggedIn);
 
         if(storedIsLoggedIn){
             user.style.display = 'flex';
+            hamburgerSection.children[0].style.display = 'none';
+            hamburgerSection.children[1].style.display = 'block';
             signUpBtn.style.display = 'none';
             data();
         }else{
             user.style.display = 'none';
-            signUpBtn.style.display = 'flex';
+            hamburgerSection.children[1].style.display = 'none';
+            hamburgerSection.children[0].style.display = 'flex';
             data();
         }
+
+        hamburger.addEventListener('click',()=>{
+            console.log(hamburgerSection.getAttribute('ref'));
+            if(hamburgerSection.getAttribute('ref') == "block"){
+                hamburgerSection.style.display = "block";
+                hamburgerSection.setAttribute('ref','none');
+            }else{
+                hamburgerSection.style.display = "none";
+                hamburgerSection.setAttribute('ref','block');
+            }
+        });
+
+        hamburgerSection.children[0].addEventListener('click',()=>{
+                hamburgerSection.style.display = "none";
+                hamburgerSection.setAttribute('ref','block');
+                myHome.style.display = 'none';
+                signPage.style.display = 'flex';
+                body.style.backgroundColor = 'rgb(75,161,240)';
+                Home_Btn.style.display = 'none';
+                shop_Btn.style.display = 'none';
+                shopping_List.style.display = 'none';
+        })
+        let ikm =1;
+        hamburgerSection.children[1].children[0].addEventListener('click',()=>{
+            if(ikm%2 !== 0){
+                hamburgerSection.children[1].children[1].style.display = 'flex';
+                ikm++;
+            }else{
+                hamburgerSection.children[1].children[1].style.display = 'none';
+                ikm--;
+            }
+            
+        })
+
+        mobileShop.addEventListener('click',()=>{
+            if(storedIsLoggedIn){
+                hamburgerSection.style.display = "none";
+                Home_Btn.classList.remove('selected-yellow');
+                shop_Btn.classList.add('selected-yellow');
+                shopping_List.style.display =  "block";
+                home_Section.style.display = "none";
+                body.style.backgroundColor = 'white';
+                console.log("done shopp");
+            }else{
+                alert('Please Login first!');
+            }
+        });
         
     </script>
 
