@@ -361,7 +361,7 @@
             </aside>
             <div id="book-shelf" class="px-2 md:px-8 grow">
                 <h1 class="text-[2.5rem] font-bold mb-8">Shopping <span class="text-blue-700">List</span></h1>
-                <div id="shopping-container" class="overflow-y-auto custom-scroll-bar md:h-[120vh] h-[140vh] flex flex-col gap-8">
+                <div id="shopping-container" class="overflow-y-auto no-scrollbar md:h-[120vh] h-[140vh] flex flex-col gap-8">
           
                 </div>
             </div>
@@ -484,14 +484,15 @@
                 user.style.display = 'block';
                 storedJsonString = localStorage.getItem("userData");
                 storedUserObject = JSON.parse(storedJsonString);
-                if(storedUserObject){
-                    user.children[0].children[0].innerHTML = `<i class="fa-regular fa-user"></i>${storedUserObject.name}`;
-                }
                 storedIsLoggedIn = true;
                 jsonString1 = JSON.stringify(storedIsLoggedIn);
                 localStorage.setItem("isLoggedIn", jsonString1);
                 hamburgerSection.children[0].style.display = 'none';
                 hamburgerSection.children[1].style.display = 'block';
+                user.children[0].children[0].innerHTML = "";
+                user.children[0].children[0].innerHTML = `<i class="fa-regular fa-user"></i>${event.target[0].value}`;
+                hamburgerSection.children[1].children[0].children[0].innerHTML = "";
+                hamburgerSection.children[1].children[0].children[0].innerHTML = `<i class="fa-regular fa-user"></i>${event.target[0].value}`;
         });
         storedJsonString = localStorage.getItem("userData");
         storedUserObject = JSON.parse(storedJsonString);
@@ -534,6 +535,8 @@
                 jsonString1 = JSON.stringify(isLoggedIn);
                 localStorage.setItem("isLoggedIn", jsonString1);
                 console.log("Hello I am logged");
+                hamburgerSection.children[1].children[0].children[0].innerHTML = "";
+                hamburgerSection.children[1].children[0].children[0].innerHTML = `<i class="fa-regular fa-user"></i>${storedUserObject.name}`;
             }else{
                 signPage.children[0].children[2].style.display = 'block';
                 signPage.children[0].children[2].style.color = 'red';
